@@ -5,7 +5,7 @@ import { TodoModule } from '../../todo.module';
 import { UserService } from './user.service';
 import { User } from './user';
 
-describe('TodoService', () => {
+describe('UserService', () => {
 
   let sut: UserService;
   let httpController: HttpTestingController;
@@ -40,8 +40,8 @@ describe('TodoService', () => {
   it('can get user with id 1337', fakeAsync(() => {
     let result: User|undefined;
 
-    sut.getUser(1).subscribe(p => result = p);
-    const request = httpController.expectOne('/api/users/1');
+    sut.getUser(1337).subscribe(p => result = p);
+    const request = httpController.expectOne('/api/users/1337');
     expect(request.request.method).toBe('GET');
     request.flush(USER_1337);
     tick();
