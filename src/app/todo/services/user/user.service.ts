@@ -14,8 +14,7 @@ export class UserService {
   ) {}
 
   getUser(id: number): Observable<User> {
-    // TODO get user from /api/users/:id
-    return EMPTY;
+    return this.http.get<User>("/api/users/"+id);
   }
 
 }
