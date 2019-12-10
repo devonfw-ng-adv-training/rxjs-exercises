@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, combineLatest} from 'rxjs';
+import {Observable, combineLatest, forkJoin} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 
 import { UserService } from '../user/user.service';
@@ -23,7 +23,7 @@ export class DashboardService {
       switchMap((todos: Todo[]) => {
         const userIds: number[] = [... new Set(todos.map( (todo: Todo) => todo.userId))];
         const userRequests: Observable<User>[] = userIds.map( (userId: number) => this.userService.getUser(userId));
-        const usersRequest: Observable<User[]> = combineLatest(userRequests);
+        const usersRequest: Observable<User[]> = forkJoin(userRequests);
         return usersRequest.pipe(
           map((users: User[]) => {
             const usersById: { [userid: number]: User } = {};
