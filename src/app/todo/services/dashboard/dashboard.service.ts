@@ -19,6 +19,7 @@ export class DashboardService {
     // TODO call todoService to receive todos,
     // TODO and call userService after for every user id (but not twice for the same one)
     // TODO build TodoWithUser objects
+    // TODO TodoWithUser objects should be in the same order as the Todos that were received from the service
     return EMPTY;
   }
 
