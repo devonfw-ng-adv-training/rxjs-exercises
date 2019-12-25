@@ -235,4 +235,73 @@ export class DashboardService {
     return resultSubject.asObservable();
   }
 
+  /**
+   * See Guidance.md for details
+   */
+  getTodosWithUsersPath1Step1(): Observable<TodoWithUser[]> {
+    return this.todoService.getTodos().pipe(
+      map((todos: Todo[]) => todos[0]),
+      map((todo: Todo) => ({ todo, user: undefined})),
+      map( (todoWithUser: TodoWithUser) => [todoWithUser])
+    );
+  }
+
+  /**
+   * See Guidance.md for details
+   */
+  getTodosWithUsersPath1Step2(): Observable<TodoWithUser[]> {
+    return this.todoService.getTodos().pipe(
+      map((todos: Todo[]) => todos[0]),
+      map((todo: Todo) => ({ todo, user: undefined})),
+      switchMap( (todoWithUser: TodoWithUser) =>
+        this.userService.getUser(todoWithUser.todo.userId).pipe(
+          map((user: User) => ({...todoWithUser, user}))
+        )),
+      map( (todoWithUser: TodoWithUser) => [todoWithUser])
+    );
+  }
+
+  /**
+   * See Guidance.md for details
+   */
+  getTodosWithUsersPath1Step3(): Observable<TodoWithUser[]> {
+    return this.todoService.getTodos().pipe(
+      switchMap((todos: Todo[]) => from(todos)),
+      map((todo: Todo) => ({ todo, user: undefined})),
+      concatMap( (todoWithUser: TodoWithUser) =>
+        this.userService.getUser(todoWithUser.todo.userId).pipe(
+          map((user: User) => ({...todoWithUser, user}))
+        )),
+      bufferCount(Number.MAX_SAFE_INTEGER)
+    );
+  }
+
+  /**
+   * See Guidance.md for details
+   */
+  getTodosWithUsersPath2Step1(): Observable<TodoWithUser[]> {
+    return this.todoService.getTodos().pipe(
+      map((todos: Todo[]) =>
+        todos.map( (todo: Todo) => ({ todo, user: undefined}))),
+    );
+  }
+
+  /**
+   * See Guidance.md for details
+   */
+  getTodosWithUsersPath2Step2(): Observable<TodoWithUser[]> {
+    return this.todoService.getTodos().pipe(
+      map((todos: Todo[]) =>
+        todos.map( (todo: Todo) => ({ todo, user: undefined}))),
+      concatMap( (todosWithUser: TodoWithUser[]) => {
+        const userRequests: Observable<User>[] =
+          todosWithUser.map((todoWithUser: TodoWithUser) => this.userService.getUser(todoWithUser.todo.userId));
+        return forkJoin(userRequests).pipe(
+          map((users: User[]) =>
+            todosWithUser.map((todoWithUser: TodoWithUser, index: number) => ({...todoWithUser, user: users[index]}))
+          ));
+      })
+    );
+  }
+
 }
