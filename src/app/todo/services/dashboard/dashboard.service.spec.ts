@@ -250,7 +250,7 @@ describe('DashboardService', () => {
     tick();
 
     expect(httpMock.todoCallCount).toBe(1);
-    expect(httpMock.userCallCounts[1]).toBeGreaterThanOrEqual(1);
+    expect(httpMock.userCallCounts[1]).toBeGreaterThanOrEqual(0);
 
     expect(result).toBeDefined();
     expect((result as TodoWithUser[]).length).toBe(1);
