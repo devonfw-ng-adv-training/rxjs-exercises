@@ -52,7 +52,7 @@ of Todos but postpone adding the users.
 1. Process Todos only
     * Convert the Todo objects to TodoWithUser objects
     * Now the tests (one todo only) and (only todos) should be successful
-2. Add user information for one user
+2. Add user information
     * Load the user information for every Todo.
       You don't have to pay attention to only making one call for each user yet.
     * Now the additional tests (one todo with user) and (multiple calls allowed) should succeed
