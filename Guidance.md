@@ -65,7 +65,7 @@ of Todos but postpone adding the users.
 The test cases of the DashboardService test suite have the following individual focus:
 
 - (final): Test everything
-- (final different order): Test everything, but have a different order of Todos
+- (final different order): Test everything, but check with a different order of Todos
 - (multiple calls allowed): Tests completeness of the TodoWithUsers but allows for multiple backend calls for an individual user
 - (only todos): Tests that the TodoWithUser result contains all Todos but ignores the user information
 - (one todo with user): Tests that the processing works for one todo and one user

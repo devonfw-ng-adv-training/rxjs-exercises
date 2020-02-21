@@ -231,7 +231,6 @@ export class DashboardService {
     });
 
     // The following happens way before the todos and their users are finished!
-    // TODO TodoWithUser objects should be in the same order as the Todos that were received from the service
     return resultSubject.asObservable();
   }
 

@@ -1,5 +1,5 @@
 
-# rjxs exercises
+# RxJS exercises
 
 This application contains unit tests. These tests are currently failing. 
 The services need to be fixed - do not modify the unit tests.
@@ -9,7 +9,7 @@ The services need to be fixed - do not modify the unit tests.
 * Fix `dashboard.service`
 
 Hint: The first two are easy, the dashboard is challenging 
-(and is not meant at all for developers who are new to RxJs).
+(and is not meant at all for developers who are new to RxJS).
 
 However, the dashboard exercise doesn't have to be completed in
 one go: there are multiple steps and different implementation
@@ -27,3 +27,16 @@ Originally from Philip Schmökel, 2017-2019
 * provided Guidance.md
 * updated test suite to have multiple progressing test cases 
 * added alternative sample solutions
+
+# META: Please note when improving this exercise
+
+## Branch master
+
+* The test cases of the master branch fail (obviously) as intended
+
+## Branch samplesolution
+
+* the DashboardService.getTodosWithUsers() should use an implementation that is "nice"
+* The test case (DashboardService.spec.ts) actually tests not only the one method getTodosWithUsers() but the other solution variations as well.
+  It includes a configuration of which methods to call and which test cases to ignore.
+  * If you add a new implementation variant, please add it to the `const testImplementations = ...`
