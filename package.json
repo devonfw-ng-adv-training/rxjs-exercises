@@ -1,5 +1,5 @@
 {
-  "name": "cap-movie-db",
+  "name": "rxjs-exercises",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -19,7 +19,7 @@
     "@angular/platform-browser": "^9.0.6",
     "@angular/platform-browser-dynamic": "^9.0.6",
     "@angular/router": "^9.0.6",
-    "rxjs": "^6.5.3",
+    "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
@@ -28,21 +28,21 @@
     "@angular/cli": "^9.0.6",
     "@angular/compiler-cli": "^9.0.6",
     "@angular/language-service": "^9.0.6",
-    "@types/node": "^12.11.1",
-    "@types/jasmine": "~3.3.8",
-    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.12.29",
+    "@types/jasmine": "~3.5.9",
+    "@types/jasminewd2": "~2.0.8",
     "codelyzer": "^5.1.2",
-    "jasmine-core": "~3.4.0",
+    "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.1.0",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-coverage-istanbul-reporter": "~2.0.1",
-    "karma-jasmine": "~2.0.1",
-    "karma-jasmine-html-reporter": "^1.4.0",
-    "protractor": "~5.4.0",
-    "ts-node": "~7.0.0",
-    "tslint": "~5.15.0",
+    "karma": "~4.4.1",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage-istanbul-reporter": "~2.1.1",
+    "karma-jasmine": "~3.1.1",
+    "karma-jasmine-html-reporter": "^1.5.2",
+    "protractor": "~5.4.3",
+    "ts-node": "~8.6.2",
+    "tslint": "~6.1.0",
     "typescript": "~3.7.5",
-    "set-value": "^2.0.1"
+    "set-value": "^3.0.1"
   }
 }
