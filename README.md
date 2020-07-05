@@ -4,11 +4,21 @@
 This application contains unit tests. These tests are currently failing. 
 The services need to be fixed - do not modify the unit tests.
 
-* Fix `todo.service`
-* Fix `user.service`
-* Fix `dashboard.service`
+The tests are organized with incremental difficulty, 
+simply 'fdescribe' the test for the service that you want to work on:
 
-Hint: The first two are easy, the dashboard is challenging 
+* Basic: `level-basic.service.ts`
+* Level 1: `level1.service.ts`: basic creation and subscription
+* Level 2: `level2.service.ts`: simple combination of observables
+* Level 3: `level3.service.ts`: combination of values from observables
+* Level 6: `level6.service.ts`: typeahead (combination of observables with constraints)
+
+There is a challenge below `todo/services/*`
+  * Fix `todo.service`
+  * Fix `user.service`
+  * Fix `dashboard.service`
+
+Hint: The first two of those are easy, the dashboard is challenging 
 (and is not meant at all for developers who are new to RxJS).
 
 However, the dashboard exercise doesn't have to be completed in
