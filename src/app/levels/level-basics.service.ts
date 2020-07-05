@@ -28,7 +28,6 @@ export class LevelBasicsService {
   /**
    * subscribe to the given observable and store the last value it produces in
    * <code>this.resultValue</code>.
-   * Assume that the given observable works asynchronously.
    */
   subscribeAndSetValue(inputObservable$: Observable<number>): void {
     return null; // TODO

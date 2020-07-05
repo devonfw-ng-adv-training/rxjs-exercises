@@ -36,18 +36,4 @@ describe('LevelBasicsService', () => {
     expect(service.resultValueForTest).toBe(3);
   }));
 
-  it('subscribeAndSetValue should unsubscribe', fakeAsync(() => {
-    let gotUnsubscribe = false;
-    const obs$ = new Observable<number>(subscriber => {
-      setTimeout(() => {
-        subscriber.next(5);
-        subscriber.complete();
-      }, 0);
-      return () => gotUnsubscribe = true;
-    });
-    service.subscribeAndSetValue(obs$);
-    tick();
-    expect(service.resultValueForTest).toBe(5);
-    expect(gotUnsubscribe).toBeTruthy('expected an unsubscribe');
-  }));
 });
