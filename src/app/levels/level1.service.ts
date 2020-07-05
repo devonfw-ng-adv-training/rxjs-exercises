@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {distinctUntilChanged, filter, map, take} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

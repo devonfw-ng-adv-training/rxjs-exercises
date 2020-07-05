@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {debounceTime, filter, switchMap} from 'rxjs/operators';
 
 export interface Backend {
   getAutocompleteValues(input: string): Observable<Array<string>>;

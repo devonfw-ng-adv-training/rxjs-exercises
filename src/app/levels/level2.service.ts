@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {concat, merge, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
