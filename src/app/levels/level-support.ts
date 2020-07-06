@@ -15,5 +15,24 @@ export interface TimedValue<T> {
  * the complete happens immediately after the last value.
  */
 export function createTimeBasedObservable<T>(timedValues: TimedValue<T>[], completeTime = 0): Observable<T> {
-  return null; // TODO
+  return new Observable<T>(subscriber => {
+    const timeouts = [];
+    let countNext = 0;
+    const maxTime = Math.max(...timedValues.map(timedValue => timedValue.time));
+    timedValues.forEach(timedValue => {
+      timeouts.push(setTimeout(() => {
+        subscriber.next(timedValue.value);
+        countNext++;
+        if (countNext === timedValues.length && completeTime <= maxTime) {
+          subscriber.complete();
+        }
+      }, timedValue.time));
+      if (completeTime > maxTime) {
+        timeouts.push(setTimeout(() => subscriber.complete(), completeTime));
+      }
+    });
+    return () => {
+      timeouts.forEach(clearTimeout);
+    }
+  });
 }
