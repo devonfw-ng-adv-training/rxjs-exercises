@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, concat, forkJoin, from, GroupedObservable, Observable, of, partition, Subject} from 'rxjs';
-import {bufferCount, concatMap, groupBy, map, mergeMap, share, switchMap} from 'rxjs/operators';
+import {bufferCount, concatMap, groupBy, map, mergeMap, share, switchMap, toArray} from 'rxjs/operators';
 
 import {UserService} from '../user/user.service';
 import {TodoService} from '../todo/todo.service';
@@ -127,7 +127,7 @@ export class DashboardService {
         user: arrayWithTodoAndUser[1]
       })),
       // and create an array again from the individual values
-      bufferCount(Number.MAX_SAFE_INTEGER)
+      toArray()
     );
   }
 
