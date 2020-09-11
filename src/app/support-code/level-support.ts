@@ -1,5 +1,5 @@
 /*
- * support code for the level-exercise
+ * support code for the level-exercise, does not have to be modified
  */
 
 import {Observable} from 'rxjs';
