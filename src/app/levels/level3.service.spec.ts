@@ -1,7 +1,7 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {Level3Service} from './level3.service';
-import {createTimeBasedObservable} from './level-support';
+import {createTimeBasedObservable} from '../support-code/level-support';
 import {Observable} from 'rxjs';
 
 describe('Level3Service', () => {

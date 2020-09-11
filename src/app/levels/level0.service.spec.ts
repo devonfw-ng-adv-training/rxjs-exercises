@@ -1,14 +1,14 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import {LevelBasicsService} from './level-basics.service';
+import {Level0Service} from './level0.service';
 import {asyncScheduler, Observable, of, scheduled} from 'rxjs';
 
 describe('LevelBasicsService', () => {
-  let service: LevelBasicsService;
+  let service: Level0Service;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LevelBasicsService);
+    service = TestBed.inject(Level0Service);
   });
 
   it('deliverSomeValues should return expected values', fakeAsync(() => {

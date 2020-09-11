@@ -1,7 +1,7 @@
 import {fakeAsync, flush, TestBed} from '@angular/core/testing';
 
 import {Backend, Level6Service} from './level6.service';
-import {createTimeBasedObservable} from './level-support';
+import {createTimeBasedObservable} from '../support-code/level-support';
 import {Observable, of} from 'rxjs';
 import {databaseValues} from './level6-data';
 import {delay, tap} from 'rxjs/operators';

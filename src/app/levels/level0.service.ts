@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LevelBasicsService {
+export class Level0Service {
 
   private resultValue: any;
 
