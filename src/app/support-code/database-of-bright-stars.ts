@@ -1,7 +1,7 @@
 /**
  * in case anyone is interested: this is the list of brightest stars from Wikipedia
  */
-export const databaseValues = [
+export const databaseOfBrightStars = [
   'Achernar',
   'Acrab',
   'Acrux',

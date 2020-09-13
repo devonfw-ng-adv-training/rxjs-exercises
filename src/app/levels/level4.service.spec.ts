@@ -5,9 +5,10 @@ import {createTimeBasedObservable} from '../support-code/level-support';
 import {Observable, of} from 'rxjs';
 import {databaseOfBrightStars} from '../support-code/database-of-bright-stars';
 import {delay, tap} from 'rxjs/operators';
+import {Level4Service} from './level4.service';
 
-describe('Level6Service', () => {
-  let service: Level6Service;
+describe('Level4Service', () => {
+  let service: Level4Service;
   let backend: Backend;
   /**
    * will respond just like backend but with a delay for each request as specified by the value for the
@@ -17,7 +18,7 @@ describe('Level6Service', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Level6Service);
+    service = TestBed.inject(Level4Service);
     backend = {
       getAutocompleteValues(input: string): Observable<Array<string>> {
         return of(databaseOfBrightStars.filter(value => value.startsWith(input)));
@@ -71,81 +72,6 @@ describe('Level6Service', () => {
       ['Algieba', 'Algol'],
       ['Bellatrix', 'Betelgeuse'],
       ['Capella', 'Caph']]);
-    expect(gotError).toBeFalsy('expecting no errors');
-    expect(gotComplete).toBeTruthy('expecting a complete');
-  }));
-
-  it('getAutocompleteList - not enough characters v2', fakeAsync(() => {
-    const obs$ = service.getAutocompleteList(
-      createTimeBasedObservable([
-        {time: 0, value: ''},
-        {time: 1000, value: 'G'},
-        {time: 2000, value: 'Ga'},
-        {time: 3000, value: 'G'}
-      ]), backend);
-    expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
-    let gotError = false;
-    let gotComplete = false;
-    obs$.subscribe(
-      v => actualValues.push(v),
-      e => gotError = true,
-      () => gotComplete = true);
-    flush();
-    expect(actualValues).toEqual([['Gacrux']]);
-    expect(gotError).toBeFalsy('expecting no errors');
-    expect(gotComplete).toBeTruthy('expecting a complete');
-  }));
-
-  it('getAutocompleteList - not enough characters', fakeAsync(() => {
-    const obs$ = service.getAutocompleteList(
-      createTimeBasedObservable([
-        {time: 0, value: ''},
-        {time: 1000, value: 'G'},
-        {time: 2000, value: 'Ga'},
-        {time: 3000, value: 'G'},
-        {time: 4000, value: 'F'},
-        {time: 5000, value: 'Fo'},
-      ]), backend);
-    expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
-    let gotError = false;
-    let gotComplete = false;
-    obs$.subscribe(
-      v => actualValues.push(v),
-      e => gotError = true,
-      () => gotComplete = true);
-    flush();
-    expect(actualValues).toEqual([['Gacrux'], ['Fomalhaut']]);
-    expect(gotError).toBeFalsy('expecting no errors');
-    expect(gotComplete).toBeTruthy('expecting a complete');
-  }));
-
-  it('getAutocompleteList - skip rapid input', fakeAsync(() => {
-    const obs$ = service.getAutocompleteList(
-      createTimeBasedObservable([
-        {time: 0, value: 'Ald'},
-        {time: 100, value: 'Ga'},
-        {time: 200, value: 'De'},
-        {time: 300, value: 'Mi'},
-        {time: 400, value: 'Min'},
-        // rest period
-        {time: 1000, value: 'Pol'},
-        {time: 1100, value: 'Ras'},
-        {time: 1200, value: 'Re'},
-        {time: 1300, value: 'Ri'},
-        {time: 1400, value: 'Pro'},
-      ]), backend);
-    expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
-    let gotError = false;
-    let gotComplete = false;
-    obs$.subscribe(
-      v => actualValues.push(v),
-      e => gotError = true,
-      () => gotComplete = true);
-    flush();
-    expect(actualValues).toEqual([['Mintaka'], ['Procyon']]);
     expect(gotError).toBeFalsy('expecting no errors');
     expect(gotComplete).toBeTruthy('expecting a complete');
   }));
