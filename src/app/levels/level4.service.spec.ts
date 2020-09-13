@@ -81,7 +81,7 @@ describe('Level4Service', () => {
       createTimeBasedObservable([
         {time: 0, value: 'Veg'},
         {time: 1000, value: 'Bet'}
-      ], 3000), backendWithDelays([2000, 500, 100000]));
+      ], 3000), backendWithDelays([2000, 500]));
     // meaning: the request for 'Bet' will come before the answer for 'Veg' is given back to the service
     expect(obs$).toBeInstanceOf(Observable);
     let actualValues = [];
