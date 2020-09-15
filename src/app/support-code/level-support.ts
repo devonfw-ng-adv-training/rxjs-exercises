@@ -16,7 +16,7 @@ export interface TimedValue<T> {
  */
 export function createTimeBasedObservable<T>(timedValues: TimedValue<T>[], completeTime = 0): Observable<T> {
   return new Observable<T>(subscriber => {
-    const timeouts = [];
+    const timeouts: any[] = [];
     let countNext = 0;
     const maxTime = Math.max(...timedValues.map(timedValue => timedValue.time));
     timedValues.forEach(timedValue => {

@@ -14,7 +14,7 @@ describe('LevelBasicsService', () => {
   it('deliverSomeValues should return expected values', fakeAsync(() => {
     const obs$ = service.deliverSomeValues();
     expect(obs$).toBeInstanceOf(Observable);
-    const actualValues = [];
+    const actualValues: number[] = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(

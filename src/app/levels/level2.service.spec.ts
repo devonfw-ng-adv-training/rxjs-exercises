@@ -15,7 +15,7 @@ describe('Level2Service', () => {
   it('sourceBasedOrder should return the as expected (simple check)', fakeAsync(() => {
     const obs$ = service.sourceBasedOrder(of('1a', '1b', '1c'), of('2a', '2b', '2c'));
     expect(obs$).toBeInstanceOf(Observable);
-    const actualValues = [];
+    const actualValues: string[] = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -43,7 +43,7 @@ describe('Level2Service', () => {
         {time: 6000, value: '2c'}
       ]));
     expect(obs$).toBeInstanceOf(Observable);
-    const actualValues = [];
+    const actualValues: string[] = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -59,7 +59,7 @@ describe('Level2Service', () => {
   it('timeBasedOrder should return the as expected (simple check)', fakeAsync(() => {
     const obs$ = service.timeBasedOrder(of('1a', '1b', '1c'), of('2a', '2b', '2c'));
     expect(obs$).toBeInstanceOf(Observable);
-    const actualValues = [];
+    const actualValues: string[] = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -85,7 +85,7 @@ describe('Level2Service', () => {
         {time: 6000, value: '2c'}
       ]));
     expect(obs$).toBeInstanceOf(Observable);
-    const actualValues = [];
+    const actualValues: string[] = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
