@@ -189,8 +189,8 @@ testImplementations.forEach(testConfig => {
       it(TestCase.FINAL_DIFFERENT_ORDER + ' can get todos with users and each user is only requested once', fakeAsync(() => {
         let result: TodoWithUser[] | undefined;
 
-        const todoDifferentOrder = [];
-        const expectedUsersDifferentOrder = [];
+        const todoDifferentOrder: Todo[] = [];
+        const expectedUsersDifferentOrder: User[] = [];
         [0, 3, 1, 5, 2, 4].forEach((i) => {
           todoDifferentOrder.push(TODOS[i]);
           expectedUsersDifferentOrder.push(EXPECTED_USERS[i]);

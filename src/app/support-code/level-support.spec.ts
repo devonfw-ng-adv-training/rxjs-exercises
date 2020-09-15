@@ -10,7 +10,7 @@ describe('level-support', () => {
       {time: 1000, value: 2},
       {time: 2000, value: 3}]);
     expect(obs$).toBeInstanceOf(Observable);
-    const actualValues = [];
+    const actualValues: number[] = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -41,7 +41,7 @@ describe('level-support', () => {
         {time: 1000, value: 2}],
       3000);
     expect(obs$).toBeInstanceOf(Observable);
-    const actualValues = [];
+    const actualValues: number[] = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -73,7 +73,7 @@ describe('level-support', () => {
       {time: 1000, value: 2},
       {time: 2000, value: 3}]);
     expect(obs$).toBeInstanceOf(Observable);
-    const actualValues = [];
+    const actualValues: number[] = [];
     let gotError = false;
     let gotComplete = false;
     const subscription = obs$.subscribe(

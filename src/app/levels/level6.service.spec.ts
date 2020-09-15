@@ -38,7 +38,7 @@ describe('Level6Service', () => {
   it('getAutocompleteList - simple single value', fakeAsync(() => {
     const obs$ = service.getAutocompleteList(of('Alg'), backend);
     expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
+    let actualValues: Array<Array<string>> = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -59,7 +59,7 @@ describe('Level6Service', () => {
         {time: 2000, value: 'Cap'}
       ]), backend);
     expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
+    let actualValues: Array<Array<string>> = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -84,7 +84,7 @@ describe('Level6Service', () => {
         {time: 3000, value: 'G'}
       ]), backend);
     expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
+    let actualValues: Array<Array<string>> = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -108,7 +108,7 @@ describe('Level6Service', () => {
         {time: 5000, value: 'Fo'},
       ]), backend);
     expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
+    let actualValues: Array<Array<string>> = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -137,7 +137,7 @@ describe('Level6Service', () => {
         {time: 1400, value: 'Pro'},
       ]), backend);
     expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
+    let actualValues: Array<Array<string>> = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
@@ -158,7 +158,7 @@ describe('Level6Service', () => {
       ], 3000), backendWithDelays([2000, 500]));
     // meaning: the request for 'Bet' will come before the answer for 'Veg' is given back to the service
     expect(obs$).toBeInstanceOf(Observable);
-    let actualValues = [];
+    let actualValues: Array<Array<string>> = [];
     let gotError = false;
     let gotComplete = false;
     obs$.subscribe(
