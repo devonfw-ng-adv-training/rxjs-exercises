@@ -25,7 +25,7 @@ export class Level6Service {
    */
   getAutocompleteList(inputObservable$: Observable<string>, backend: Backend): Observable<Array<string>> {
     return inputObservable$.pipe(
-      filter(value => value ? value.length >= 2 : false),
+      filter(value => value.length >= 2 ),
       debounceTime(500),
       switchMap(value => backend.getAutocompleteValues(value))
     );

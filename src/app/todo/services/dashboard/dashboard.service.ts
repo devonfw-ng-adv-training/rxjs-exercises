@@ -240,8 +240,8 @@ export class DashboardService {
   getTodosWithUsersPath1Step1(): Observable<TodoWithUser[]> {
     return this.todoService.getTodos().pipe(
       map((todos: Todo[]) => todos[0]),
-      map((todo: Todo) => ({ todo, user: undefined})),
-      map( (todoWithUser: TodoWithUser) => [todoWithUser])
+      map((todo: Todo) => ({todo, user: {id: -1, name: ''}})),
+      map((todoWithUser: TodoWithUser) => [todoWithUser])
     );
   }
 
@@ -251,12 +251,12 @@ export class DashboardService {
   getTodosWithUsersPath1Step2(): Observable<TodoWithUser[]> {
     return this.todoService.getTodos().pipe(
       map((todos: Todo[]) => todos[0]),
-      map((todo: Todo) => ({ todo, user: undefined})),
-      switchMap( (todoWithUser: TodoWithUser) =>
+      map((todo: Todo) => ({todo, user: {id: -1, name: ''}})),
+      switchMap((todoWithUser: TodoWithUser) =>
         this.userService.getUser(todoWithUser.todo.userId).pipe(
           map((user: User) => ({...todoWithUser, user}))
         )),
-      map( (todoWithUser: TodoWithUser) => [todoWithUser])
+      map((todoWithUser: TodoWithUser) => [todoWithUser])
     );
   }
 
@@ -266,8 +266,8 @@ export class DashboardService {
   getTodosWithUsersPath1Step3(): Observable<TodoWithUser[]> {
     return this.todoService.getTodos().pipe(
       switchMap((todos: Todo[]) => from(todos)),
-      map((todo: Todo) => ({ todo, user: undefined})),
-      concatMap( (todoWithUser: TodoWithUser) =>
+      map((todo: Todo) => ({todo, user: {id: -1, name: ''}})),
+      concatMap((todoWithUser: TodoWithUser) =>
         this.userService.getUser(todoWithUser.todo.userId).pipe(
           map((user: User) => ({...todoWithUser, user}))
         )),
@@ -281,7 +281,7 @@ export class DashboardService {
   getTodosWithUsersPath2Step1(): Observable<TodoWithUser[]> {
     return this.todoService.getTodos().pipe(
       map((todos: Todo[]) =>
-        todos.map( (todo: Todo) => ({ todo, user: undefined}))),
+        todos.map((todo: Todo) => ({todo, user: {id: -1, name: ''}}))),
     );
   }
 
@@ -291,8 +291,8 @@ export class DashboardService {
   getTodosWithUsersPath2Step2(): Observable<TodoWithUser[]> {
     return this.todoService.getTodos().pipe(
       map((todos: Todo[]) =>
-        todos.map( (todo: Todo) => ({ todo, user: undefined}))),
-      concatMap( (todosWithUser: TodoWithUser[]) => {
+        todos.map((todo: Todo) => ({todo, user: {id: -1, name: ''}}))),
+      concatMap((todosWithUser: TodoWithUser[]) => {
         const userRequests: Observable<User>[] =
           todosWithUser.map((todoWithUser: TodoWithUser) => this.userService.getUser(todoWithUser.todo.userId));
         return forkJoin(userRequests).pipe(

@@ -34,10 +34,10 @@ export class Level7Service {
         // note: the iif has to be wrapped within an higher order observable
         // since the predicate is evaluated at subscription time
         iif(
-          () => value && value.length >= 2,
+          () => value.length >= 2,
           backend.getAutocompleteValues(value).pipe(timeoutWith(1000, of([]))),
           of([]))),
-      distinctUntilChanged((oldValue,newValue) => _.isEqual(oldValue, newValue))
+      distinctUntilChanged((oldValue, newValue) => _.isEqual(oldValue, newValue))
     );
   }
 
