@@ -145,7 +145,7 @@ describe('Level7Service', () => {
       v => actualValues.push(v),
       e => gotError = true,
       () => gotComplete = true);
-    flush();
+    flush(100); // detail note: some implementations require more iterations - see https://github.com/angular/zone.js/pull/831
     expect(actualValues).toEqual([['Mintaka'], ['Procyon']]);
     expect(gotError).toBeFalsy('expecting no errors');
     expect(gotComplete).toBeTruthy('expecting a complete');
