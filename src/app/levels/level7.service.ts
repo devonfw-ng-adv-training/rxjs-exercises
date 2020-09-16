@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {iif, Observable, of} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap, tap, timeoutWith} from 'rxjs/operators';
+import {iif, merge, Observable, of, partition} from 'rxjs';
+import {debounceTime, distinctUntilChanged, map, share, switchMap, timeoutWith} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 export interface Backend {
@@ -39,6 +39,18 @@ export class Level7Service {
           of([]))),
       distinctUntilChanged((oldValue, newValue) => _.isEqual(oldValue, newValue))
     );
+  }
+
+  getAutocompleteListVariation(inputObservable$: Observable<string>, backend: Backend): Observable<Array<string>> {
+    const [shortValues$, longValues$] = partition(
+      inputObservable$.pipe(share(), debounceTime(500)),
+      (value: string) => value.length < 2);
+    const longValuesLoaded$ = longValues$.pipe(
+      switchMap(y => backend.getAutocompleteValues(y).pipe(timeoutWith(1000, of([])))));
+    return merge(
+      shortValues$.pipe(map(x => [])),
+      longValuesLoaded$
+    ).pipe(distinctUntilChanged((x, y) => _.isEqual(x, y)));
   }
 
 }
