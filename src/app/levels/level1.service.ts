@@ -24,8 +24,8 @@ export class Level1Service {
   }
 
   /**
-   * return an observable that produces the first 3 values from the input observable that are greater than 10
-   * but only when they differ from the previous value
+   * return an observable that produces values from the input observable that are greater than 10
+   * but only report three values and only report a value if it is different from the previously reported value
    */
   first3ValuesGreaterThan10OnlyWhenDifferent(inputObservable$: Observable<number>): Observable<number> {
     return null; // TODO
