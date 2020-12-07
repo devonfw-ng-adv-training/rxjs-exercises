@@ -11,6 +11,7 @@ simply 'fdescribe' the test for the service that you want to work on:
 * Level 1: `level1.service.ts`: first operators
 * Level 2: `level2.service.ts`: simple combination of observables
 * Level 3: `level3.service.ts`: combination of values from observables
+* Level 4: `level4.service.ts`: calling a sub process
 * Level 6: `level6.service.ts`: typeahead (combination of observables with constraints)
 * Level 7: `level7.service.ts`: conditional execution
 
