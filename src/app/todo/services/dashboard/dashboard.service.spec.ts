@@ -76,12 +76,12 @@ describe('DashboardService', () => {
   let httpMock: MockHttpClient;
 
   beforeEach(() => {
+    httpMock = new MockHttpClient();
     TestBed.configureTestingModule({
       imports: [TodoModule],
-      providers: [{provide: HttpClient, useClass: MockHttpClient}]
+      providers: [{provide: HttpClient, useValue: httpMock}]
     });
-    sut = TestBed.get(DashboardService);
-    httpMock = TestBed.get(HttpClient);
+    sut = TestBed.inject(DashboardService);
   });
 
   afterEach(() => {
