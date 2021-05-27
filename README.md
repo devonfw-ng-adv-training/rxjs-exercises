@@ -14,6 +14,7 @@ simply 'fdescribe' the test for the service that you want to work on:
 * Level 4: `level4.service.ts`: calling a sub process
 * Level 6: `level6.service.ts`: typeahead (combination of observables with constraints)
 * Level 7: `level7.service.ts`: conditional execution
+* Level 8: `level8.service.ts`: error handling
 
 There is a challenge below `todo/services/*`
   * Fix `todo.service`
