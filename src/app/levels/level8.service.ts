@@ -1,7 +1,7 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import * as _ from "lodash";
-import { iif, Observable, of, throwError, timer } from "rxjs";
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
+import { iif, Observable, of, throwError, timer } from 'rxjs';
 import {
   catchError,
   debounceTime,
@@ -9,14 +9,14 @@ import {
   retryWhen,
   switchMap,
   timeoutWith,
-} from "rxjs/operators";
+} from 'rxjs/operators';
 
 export interface Backend {
   getAutocompleteValues(input: string): Observable<Array<string>>;
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class Level8Service {
   constructor() {}

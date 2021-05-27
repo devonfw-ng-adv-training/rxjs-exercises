@@ -16,8 +16,8 @@ describe('UserService', () => {
     TestBed.configureTestingModule({
       imports: [TodoModule, HttpClientTestingModule],
     });
-    sut = TestBed.get(UserService);
-    httpController = TestBed.get(HttpTestingController);
+    sut = TestBed.inject(UserService);
+    httpController = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {

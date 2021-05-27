@@ -19,8 +19,8 @@ describe('TodoService', () => {
     TestBed.configureTestingModule({
       imports: [TodoModule, HttpClientTestingModule],
     });
-    sut = TestBed.get(TodoService);
-    httpController = TestBed.get(HttpTestingController);
+    sut = TestBed.inject(TodoService);
+    httpController = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {

@@ -133,13 +133,13 @@ testImplementations.forEach(testConfig => {
     const shouldTest = (testCase: TestCase) => (testConfig.suppressedTestCases == null) || (testConfig.suppressedTestCases.indexOf(testCase) < 0);
 
     beforeEach(() => {
+      httpMock = new MockHttpClient();
       TestBed.configureTestingModule({
         imports: [TodoModule],
-        providers: [{provide: HttpClient, useClass: MockHttpClient}]
+        providers: [{provide: HttpClient, useValue: httpMock}]
       });
-      sut = TestBed.get(DashboardService);
+      sut = TestBed.inject(DashboardService);
       testCall = () => sut[testConfig.methodName]();
-      httpMock = TestBed.get(HttpClient);
     });
 
     afterEach(() => {

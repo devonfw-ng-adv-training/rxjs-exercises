@@ -22,7 +22,7 @@ There is a challenge below `todo/services/*`
   * Fix `dashboard.service`
 
 Hint: The first two of those are easy, the dashboard is challenging 
-(and is not meant at all for developers who are new to RxJS).
+(and is not meant at all for developers who are new to RxJs).
 
 However, the dashboard exercise doesn't have to be completed in
 one go: there are multiple steps and different implementation
