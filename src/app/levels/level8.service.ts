@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export interface Backend {
   getAutocompleteValues(input: string): Observable<Array<string>>;
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class Level8Service {
   constructor() {}
