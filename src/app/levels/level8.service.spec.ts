@@ -269,10 +269,10 @@ describe('Level8Service', () => {
       () => (gotComplete = true)
     );
     tick(999);
-    expect(errors.length).toEqual(1);
+    expect(errors.length).toEqual(1); // retry should happen after exactly 1000 ms
     tick(1);
     expect(actualValues).toEqual([[]]); // an empty array should have been emitted by default
-    expect(errors).toEqual([]); // all errors should have been emitted
+    expect(errors).toEqual([]); // all errors should have been emitted after 1000 ms
     expect(gotError).toBeFalse(); // error should have been caught
     expect(gotComplete).toBeTrue();
   }));
