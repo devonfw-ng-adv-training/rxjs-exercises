@@ -7,6 +7,29 @@ import { createTimeBasedObservable } from '../support-code/level-support';
 
 import { Backend, Level8Service } from './level8.service';
 
+const createErrorBackend = (
+  ...codes: number[]
+): [Backend, HttpErrorResponse[]] => {
+  const errors: HttpErrorResponse[] = codes
+    .reverse()
+    .map((code) => new HttpErrorResponse({ status: code }));
+  const errorBackend: Backend = {
+    getAutocompleteValues: (input: string): Observable<string[]> =>
+      new Observable((subscriber) => {
+        const error = errors.pop();
+        if (error) {
+          subscriber.error(error);
+        } else {
+          subscriber.next(
+            databaseOfBrightStars.filter((value) => value.startsWith(input))
+          );
+          subscriber.complete();
+        }
+      }),
+  };
+  return [errorBackend, errors];
+};
+
 describe('Level8Service', () => {
   let service: Level8Service;
   let backend: Backend;
@@ -237,26 +260,7 @@ describe('Level8Service', () => {
   }));
 
   it('getAutocompleteList - handle backend status 429 - retry after 1000ms', fakeAsync(() => {
-    const errors: HttpErrorResponse[] = [
-      new HttpErrorResponse({
-        status: 500,
-      }),
-      new HttpErrorResponse({
-        status: 429,
-      }),
-    ];
-    const errorBackend: Backend = {
-      getAutocompleteValues: (input: string): Observable<string[]> =>
-        new Observable((subscriber) => {
-          const error = errors.pop();
-          if (error) {
-            subscriber.error(error);
-          }
-          subscriber.next(
-            databaseOfBrightStars.filter((value) => value.startsWith(input))
-          );
-        }),
-    };
+    const [errorBackend, errors] = createErrorBackend(429);
     const obs$ = service.getAutocompleteList(of('Bet'), errorBackend);
     expect(obs$).toBeInstanceOf(Observable);
 
@@ -269,11 +273,30 @@ describe('Level8Service', () => {
       () => (gotComplete = true)
     );
     tick(999);
-    expect(errors.length).toEqual(1); // retry should happen after exactly 1000 ms
+    expect(actualValues).toEqual([]); // should only retry after exactly 1000ms
     tick(1);
-    expect(actualValues).toEqual([[]]); // an empty array should have been emitted by default
-    expect(errors).toEqual([]); // all errors should have been emitted after 1000 ms
+    expect(actualValues).toEqual([['Betelgeuse']]);
+    expect(errors).toEqual([]); // all errors should have been emitted
     expect(gotError).toBeFalse(); // error should have been caught
     expect(gotComplete).toBeTrue();
   }));
+
+  it('getAutocompleteList - resort to an empty array if a backend error without status 429 is thrown', () => {
+    const [errorBackend, errors] = createErrorBackend(500);
+    const obs$ = service.getAutocompleteList(of('Bet'), errorBackend);
+    expect(obs$).toBeInstanceOf(Observable);
+
+    const actualValues: Array<Array<string>> = [];
+    let gotError = false;
+    let gotComplete = false;
+    obs$.subscribe(
+      (v) => actualValues.push(v),
+      () => (gotError = true),
+      () => (gotComplete = true)
+    );
+    expect(actualValues).toEqual([[]]); // an empty array should be returned on error
+    expect(errors).toEqual([]); // all errors should have been emitted
+    expect(gotError).toBeFalse(); // error should have been caught
+    expect(gotComplete).toBeTrue();
+  });
 });
