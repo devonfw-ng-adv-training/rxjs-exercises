@@ -1,6 +1,16 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, concat, forkJoin, from, GroupedObservable, Observable, of, partition, Subject} from 'rxjs';
-import {bufferCount, concatMap, groupBy, map, mergeMap, share, switchMap, toArray} from 'rxjs/operators';
+import {
+  bufferCount,
+  concatMap,
+  distinct,
+  groupBy,
+  map,
+  mergeMap,
+  shareReplay,
+  switchMap,
+  toArray
+} from 'rxjs/operators';
 
 import {UserService} from '../user/user.service';
 import {TodoService} from '../todo/todo.service';
@@ -105,7 +115,7 @@ export class DashboardService {
 
   /**
    * This approach converts the Todos array into a stream, loads the user information for each
-   * but share() makes sure only one value is loaded, and combines the values again to an array.
+   * but shareReplay(1) makes sure only one value is loaded, and combines the values again to an array.
    * It is a mixture of reactive and imperative programming.
    */
   getTodosWithUsersStreamedMixtureWithShare(): Observable<TodoWithUser[]> {
@@ -117,7 +127,7 @@ export class DashboardService {
       // join the user from the shared requests
       concatMap((todo: Todo) => {
         if (!userRequests[todo.userId]) {
-          userRequests[todo.userId] = this.userService.getUser(todo.userId).pipe(share());
+          userRequests[todo.userId] = this.userService.getUser(todo.userId).pipe(shareReplay(1));
         }
         return forkJoin([of(todo), userRequests[todo.userId]]);
       }),
@@ -300,6 +310,18 @@ export class DashboardService {
             todosWithUser.map((todoWithUser: TodoWithUser, index: number) => ({...todoWithUser, user: users[index]}))
           ));
       })
+    );
+  }
+
+  getTodosWithUsersShort(): Observable<TodoWithUser[]> {
+    return this.todoService.getTodos().pipe(
+      switchMap(todos => from(todos).pipe(
+        map(todo => todo.userId),
+        distinct(),
+        mergeMap(userId => this.userService.getUser(userId)),
+        toArray(),
+        map(users => todos.map(todo => ({ todo, user: users.find(u => u.id === todo.userId) } as TodoWithUser)))
+      ))
     );
   }
 
