@@ -7,7 +7,7 @@ import {User} from '../user/user';
 import {TodoWithUser} from './todo-with-user';
 import {HttpClient} from '@angular/common/http';
 import {asyncScheduler, Observable, of} from 'rxjs';
-import {observeOn} from 'rxjs/operators';
+import {observeOn, tap} from 'rxjs/operators';
 
 const TODOS: Todo[] = [
   {id: 1, title: 'Angular', description: 'Learn Angular and have fun.', userId: 1},
@@ -54,15 +54,15 @@ class MockHttpClient {
 
   get(url: string): Observable<any> {
     if (url === '/api/todos') {
-      this.todoCallCount++;
-      return of(this.todoListResponse).pipe(observeOn(asyncScheduler));
+      // we're counting the actual calls (this depends on the count of subscribes we get)
+      return of(this.todoListResponse).pipe(tap(() => this.todoCallCount++), observeOn(asyncScheduler));
     }
     if (url.startsWith('/api/users/')) {
       const userId = url.substring('/api/users/'.length);
       const user = USERS_BY_ID[userId];
       if (user) {
-        this.userCallCounts[userId]++;
-        return of(user).pipe(observeOn(asyncScheduler));
+        // we're counting the actual calls per user (this depends on the count of subscribes we get)
+        return of(user).pipe(tap(() => { this.userCallCounts[userId]++; }), observeOn(asyncScheduler));
       }
     }
     throw new Error('Unexpected request to URL ' + url);
