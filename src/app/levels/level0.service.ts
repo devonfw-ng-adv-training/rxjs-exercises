@@ -26,7 +26,7 @@ export class Level0Service {
   }
 
   /**
-   * subscribe to the given observable and store the last value it produces in
+   * subscribe to the given observable and store the value(s) it produces in
    * <code>this.resultValue</code>.
    */
   subscribeAndSetValue(inputObservable$: Observable<number>): void {
