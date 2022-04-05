@@ -29,6 +29,12 @@ export class DashboardService {
   ) {
   }
 
+  /**
+   * The purpose of this method is to return all todos with their associated user object.
+   * The todos are returned by the TodoService, the corresponding users by id from the UserService.
+   * But: While a user may have multiple todos, a user object should only be requested once.
+   * And the list of todos should be returned in the same order as they are received from the TodoService.
+   */
   getTodosWithUsers(): Observable<TodoWithUser[]> {
     // various solutions are available - check methods below
     return this.getTodosWithUsersStreamedMixtureWithShare();
