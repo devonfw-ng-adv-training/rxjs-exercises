@@ -138,10 +138,7 @@ export class DashboardService {
         return forkJoin([of(todo), userRequests[todo.userId]]);
       }),
       // combine the array values to the TodoWithUser
-      map(arrayWithTodoAndUser => ({
-        todo: arrayWithTodoAndUser[0],
-        user: arrayWithTodoAndUser[1]
-      })),
+      map(([todo, user]) => ({todo, user})),
       // and create an array again from the individual values
       toArray()
     );
@@ -326,7 +323,7 @@ export class DashboardService {
         distinct(),
         mergeMap(userId => this.userService.getUser(userId)),
         toArray(),
-        map(users => todos.map(todo => ({ todo, user: users.find(u => u.id === todo.userId) } as TodoWithUser)))
+        map(users => todos.map(todo => ({todo, user: users.find(u => u.id === todo.userId)} as TodoWithUser)))
       ))
     );
   }
