@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import * as _ from 'lodash';
+import {Observable, of} from 'rxjs';
+import isEqual from 'lodash.isequal';
 
 export interface Backend {
   getAutocompleteValues(input: string): Observable<Array<string>>;
@@ -22,7 +22,7 @@ export class Level7Service {
    *       (instead of returning nothing - since it is not nice to display old results)</LI>
    *   <LI>when the source changes rapidly (<500ms), do not load the data</LI>
    *   <LI>do not return data if there is already a new input value before the previous input has been processed</LI>
-   *   <LI>do not return the same value twice in a row (hint: use _.isEqual(a,b) to compare arrays)</LI>
+   *   <LI>do not return the same value twice in a row (hint: use isEqual(a,b) to compare arrays)</LI>
    *   <LI>return an empty list if the backend does not respond within 1000ms.</LI>
    * </UL>
    */
