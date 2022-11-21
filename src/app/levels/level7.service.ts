@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {iif, merge, Observable, of, partition} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map, share, switchMap, timeoutWith} from 'rxjs/operators';
-import * as _ from 'lodash';
+import isEqual from 'lodash.isequal';
 
 export interface Backend {
   getAutocompleteValues(input: string): Observable<Array<string>>;
@@ -23,7 +23,7 @@ export class Level7Service {
    *       (instead of returning nothing - since it is not nice to display old results)</LI>
    *   <LI>when the source changes rapidly (<500ms), do not load the data</LI>
    *   <LI>do not return data if there is already a new input value before the previous input has been processed</LI>
-   *   <LI>do not return the same value twice in a row (hint: use _.isEqual(a,b) to compare arrays)</LI>
+   *   <LI>do not return the same value twice in a row (hint: use isEqual(a,b) to compare arrays)</LI>
    *   <LI>return an empty list if the backend does not respond within 1000ms.</LI>
    * </UL>
    */
@@ -37,7 +37,7 @@ export class Level7Service {
           () => value.length >= 2,
           backend.getAutocompleteValues(value).pipe(timeoutWith(1000, of([]))),
           of([]))),
-      distinctUntilChanged((oldValue, newValue) => _.isEqual(oldValue, newValue))
+      distinctUntilChanged((oldValue, newValue) => isEqual(oldValue, newValue))
     );
   }
 
@@ -50,7 +50,7 @@ export class Level7Service {
     return merge(
       shortValues$.pipe(map(x => [])),
       longValuesLoaded$
-    ).pipe(distinctUntilChanged((x, y) => _.isEqual(x, y)));
+    ).pipe(distinctUntilChanged((x, y) => isEqual(x, y)));
   }
 
 }

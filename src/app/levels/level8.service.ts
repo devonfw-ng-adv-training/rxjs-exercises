@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash';
+import isEqual from 'lodash.isequal';
 import { iif, Observable, of, throwError, timer } from 'rxjs';
 import {
   catchError,
@@ -29,7 +29,7 @@ export class Level8Service {
    *       (instead of returning nothing - since it is not nice to display old results)</LI>
    *   <LI>when the source changes rapidly (<500ms), do not load the data</LI>
    *   <LI>do not return data if there is already a new input value before the previous input has been processed</LI>
-   *   <LI>do not return the same value twice in a row (hint: use _.isEqual(a,b) to compare arrays)</LI>
+   *   <LI>do not return the same value twice in a row (hint: use isEqual(a,b) to compare arrays)</LI>
    *   <LI>return an empty list if the backend does not respond within 1000ms.</LI>
    *   <LI>when the backend returns with a 429 HttpErrorResponse, retry after 1000ms<./LI>
    *   <LI>when the backend returns any other error, resort to an empty array.</LI>
@@ -67,7 +67,7 @@ export class Level8Service {
         )
       ),
       distinctUntilChanged((oldValue, newValue) =>
-        _.isEqual(oldValue, newValue)
+        isEqual(oldValue, newValue)
       )
     );
   }
