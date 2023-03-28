@@ -107,6 +107,7 @@ describe('Level7Service', () => {
         {time: 3000, value: 'G'},
         {time: 4000, value: 'F'},
         {time: 5000, value: 'Fo'},
+        {time: 6000, value: ''},
       ]), backend);
     expect(obs$).toBeInstanceOf(Observable);
     let actualValues: Array<Array<string>> = [];
@@ -117,7 +118,7 @@ describe('Level7Service', () => {
       e => gotError = true,
       () => gotComplete = true);
     flush();
-    expect(actualValues).toEqual([[], ['Gacrux'], [], ['Fomalhaut']]);
+    expect(actualValues).toEqual([[], ['Gacrux'], [], ['Fomalhaut'], []]);
     expect(gotError).toBeFalsy('expecting no errors');
     expect(gotComplete).toBeTruthy('expecting a complete');
   }));
@@ -195,4 +196,24 @@ describe('Level7Service', () => {
     expect(gotComplete).toBeTruthy('expecting a complete');
   }));
 
+  it('getAutocompleteList - do not return the same value twice', fakeAsync(() => {
+    const obs$ = service.getAutocompleteList(
+      createTimeBasedObservable([
+        {time: 0, value: ''},
+        {time: 1000, value: 'Ga'},
+        {time: 2000, value: 'Gac'},
+      ]), backend);
+    expect(obs$).toBeInstanceOf(Observable);
+    let actualValues: Array<Array<string>> = [];
+    let gotError = false;
+    let gotComplete = false;
+    obs$.subscribe(
+      v => actualValues.push(v),
+      e => gotError = true,
+      () => gotComplete = true);
+    flush();
+    expect(actualValues).toEqual([[], ['Gacrux']]);
+    expect(gotError).toBeFalsy('expecting no errors');
+    expect(gotComplete).toBeTruthy('expecting a complete');
+  }));
 });
