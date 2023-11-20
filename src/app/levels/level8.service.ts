@@ -1,14 +1,14 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import isEqual from 'lodash.isequal';
-import { iif, Observable, of, throwError, timer } from 'rxjs';
+import { Observable, iif, of, throwError, timer } from 'rxjs';
 import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  retryWhen,
+  retry,
   switchMap,
-  timeoutWith,
+  timeout
 } from 'rxjs/operators';
 
 export interface Backend {
@@ -19,7 +19,7 @@ export interface Backend {
   providedIn: 'root',
 })
 export class Level8Service {
-  constructor() {}
+  constructor() { }
 
   /**
    * return an observable that produces an autocomplete list for the stream of inputs based on the
@@ -47,20 +47,18 @@ export class Level8Service {
         iif(
           () => value.length >= 2,
           backend.getAutocompleteValues(value).pipe(
-            timeoutWith(1000, of([])),
-            retryWhen((errors) =>
-              errors.pipe(
-                switchMap((error) =>
-                  iif(
-                    () =>
-                      error instanceof HttpErrorResponse &&
-                      error.status === 429,
-                    timer(1000),
-                    throwError(error)
-                  )
-                )
-              )
-            ),
+            timeout({
+              each: 1000,
+              with: () => of([])
+            }),
+            retry({
+              delay: (error) => {
+                if (error instanceof HttpErrorResponse && error.status === HttpStatusCode.TooManyRequests) {
+                  return timer(1000);
+                }
+                return throwError(() => error);
+              },
+            }),
             catchError(() => of([]))
           ),
           of([])

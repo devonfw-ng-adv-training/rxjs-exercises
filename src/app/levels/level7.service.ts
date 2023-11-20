@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {iif, merge, Observable, of, partition} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map, share, switchMap, timeoutWith} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { iif, merge, Observable, of, partition } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, share, switchMap, timeout } from 'rxjs/operators';
 import isEqual from 'lodash.isequal';
 
 export interface Backend {
@@ -35,7 +35,12 @@ export class Level7Service {
         // since the predicate is evaluated at subscription time
         iif(
           () => value.length >= 2,
-          backend.getAutocompleteValues(value).pipe(timeoutWith(1000, of([]))),
+          backend.getAutocompleteValues(value).pipe(
+            timeout({
+              each: 1000,
+              with: () => of([])
+            })
+          ),
           of([]))),
       distinctUntilChanged((oldValue, newValue) => isEqual(oldValue, newValue))
     );
@@ -46,7 +51,12 @@ export class Level7Service {
       inputObservable$.pipe(share(), debounceTime(500)),
       (value: string) => value.length < 2);
     const longValuesLoaded$ = longValues$.pipe(
-      switchMap(y => backend.getAutocompleteValues(y).pipe(timeoutWith(1000, of([])))));
+      switchMap(y => backend.getAutocompleteValues(y).pipe(
+        timeout({
+          each: 1000,
+          with: () => of([])
+        })
+      )));
     return merge(
       shortValues$.pipe(map(x => [])),
       longValuesLoaded$
